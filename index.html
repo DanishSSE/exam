@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Development Foundation — Final Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Exam chrome: only visible while the paper is open -->
+<header class="chrome" id="chrome" hidden>
+  <div class="chrome__who">
+    <span class="chrome__name" id="chrome-name">—</span>
+    <span class="chrome__paper">Web Development Foundation</span>
+  </div>
+  <div class="chrome__stats">
+    <p class="counter"><strong id="answered-count">0</strong> of 60 answered</p>
+    <p class="timer" id="timer" role="timer">60:00</p>
+  </div>
+</header>
+
+<!-- Section tabs double as the progress map -->
+<nav class="tabs" id="tabs" hidden aria-label="Exam sections"></nav>
+
+<main>
+
+  <!-- ─────────────────────────── 1. Name ─────────────────────────── -->
+  <section class="screen start" id="screen-start">
+    <div class="start__inner">
+      <p class="start__kicker">Full Stack Web Development</p>
+      <h1 class="start__title">Foundation<br>Final Assessment</h1>
+
+      <p class="start__lede">
+        Sixty questions on the things you will actually do when you build a
+        website — reading code, fixing a broken layout, choosing between two
+        approaches, and running the commands that ship your work.
+      </p>
+
+      <dl class="facts">
+        <div class="facts__item"><dt>Questions</dt><dd>60</dd></div>
+        <div class="facts__item"><dt>Sections</dt><dd>7</dd></div>
+        <div class="facts__item"><dt>Time</dt><dd>60 min</dd></div>
+        <div class="facts__item"><dt>Marks</dt><dd>1 each</dd></div>
+      </dl>
+
+      <ol class="syllabus" id="syllabus"></ol>
+
+      <div class="resume" id="resume" hidden>
+        <p class="resume__text">
+          You have an exam already in progress, <strong id="resume-name"></strong>.
+          <span id="resume-detail"></span>
+        </p>
+        <div class="resume__actions">
+          <button class="btn btn--primary" type="button" id="btn-resume">Resume exam</button>
+          <button class="btn btn--quiet" type="button" id="btn-discard">Start over</button>
+        </div>
+      </div>
+
+      <form class="namebox" id="name-form" novalidate>
+        <label class="namebox__label" for="student-name">Your full name</label>
+        <p class="namebox__hint">This is what appears on your result, so write it as your instructor knows it.</p>
+        <div class="namebox__row">
+          <input class="namebox__input" type="text" id="student-name" name="student-name"
+                 autocomplete="name" placeholder="e.g. Aisha Rahman" maxlength="60" required>
+          <button class="btn btn--primary" type="submit">Start exam</button>
+        </div>
+        <p class="namebox__error" id="name-error" role="alert" hidden>Enter your name to begin.</p>
+      </form>
+
+      <p class="start__note">
+        The clock starts when you press <em>Start exam</em> and keeps running if you
+        close the tab. Your answers are saved in this browser as you go.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────── 2. Exam ─────────────────────────── -->
+  <section class="screen exam" id="screen-exam" hidden>
+    <header class="exam__head">
+      <h2 class="exam__title" id="section-title">Section</h2>
+      <p class="exam__sub" id="section-sub"></p>
+    </header>
+
+    <div id="questions"></div>
+
+    <nav class="pager" aria-label="Section navigation">
+      <button class="btn btn--quiet" type="button" id="btn-prev">Previous section</button>
+      <p class="pager__status" id="pager-status"></p>
+      <button class="btn btn--primary" type="button" id="btn-next">Next section</button>
+    </nav>
+  </section>
+
+  <!-- ────────────────────────── 3. Results ───────────────────────── -->
+  <section class="screen results" id="screen-results" hidden>
+    <div class="verdict">
+      <p class="verdict__emoji" id="verdict-emoji" role="img" aria-label="result">🎉</p>
+      <p class="verdict__score">
+        <span class="verdict__got" id="verdict-got">0</span><span class="verdict__of"> / 60</span>
+      </p>
+      <p class="verdict__pct" id="verdict-pct">0%</p>
+      <h2 class="verdict__line" id="verdict-line">Scoring…</h2>
+      <p class="verdict__who" id="verdict-who"></p>
+    </div>
+
+    <div class="paperwrap">
+      <h3 class="paperwrap__h">Your paper, question by question</h3>
+      <p class="paperwrap__legend">
+        <span class="key key--right"></span> correct
+        <span class="key key--wrong"></span> incorrect
+        <span class="key key--blank"></span> left blank
+      </p>
+      <div class="paper" id="paper"></div>
+    </div>
+
+    <p class="insight" id="insight"></p>
+
+    <div class="results__actions">
+      <button class="btn btn--primary" type="button" id="btn-project">See your next assignment</button>
+      <button class="btn btn--quiet" type="button" id="btn-review" hidden>Review every answer</button>
+      <button class="btn btn--quiet" type="button" id="btn-retake" hidden>Retake exam</button>
+    </div>
+  </section>
+
+  <!-- ─────────────────────── 4. Mini project ─────────────────────── -->
+  <section class="screen project" id="screen-project" hidden>
+    <header class="project__head">
+      <p class="project__kicker">Assignment 01</p>
+      <h2 class="project__title">Build a responsive small-business website</h2>
+      <p class="project__due">
+        Due <strong id="project-due">—</strong> · 40 marks · 1 mark per requirement
+      </p>
+    </header>
+
+    <div class="project__brief">
+      <p>
+        Pick a real kind of small business — a bakery, a gym, a tutoring centre, a
+        phone repair shop — and build the site it would actually need. Everything
+        below is something a client or a team lead would genuinely ask for, and
+        every requirement is marked as done or not done, so read the list before
+        you start and again before you submit.
+      </p>
+      <p class="project__rule">
+        Work on it across all three days and commit as you go. A single commit on
+        the last evening loses the marks in the delivery group.
+      </p>
+    </div>
+
+    <div id="requirements"></div>
+
+    <div class="project__actions">
+      <button class="btn btn--quiet" type="button" id="btn-back-results">Back to your result</button>
+      <button class="btn btn--quiet" type="button" id="btn-print">Print this brief</button>
+    </div>
+  </section>
+
+  <!-- ───────────────────── 5. Admin (?admin only) ────────────────── -->
+  <section class="screen admin" id="screen-admin" hidden>
+    <header class="admin__head">
+      <h2 class="admin__title">Answer review</h2>
+      <p class="admin__warn">
+        Instructor view. The <code>?admin</code> flag in the address bar is a
+        convenience switch, not a lock — anyone who knows it can use it.
+      </p>
+    </header>
+
+    <div class="admin__bar">
+      <button class="btn btn--quiet" type="button" id="btn-admin-back">Back to result</button>
+      <button class="btn btn--quiet" type="button" id="btn-wrong-only">Show incorrect only</button>
+      <button class="btn btn--danger" type="button" id="btn-clear">Clear all saved data</button>
+    </div>
+
+    <div id="review"></div>
+
+    <h3 class="admin__h">Attempts saved in this browser</h3>
+    <div id="attempts"></div>
+  </section>
+
+</main>
+
+<script src="js/questions.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
